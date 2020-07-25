@@ -1,0 +1,19 @@
+galaxy_info:
+  company: Arbisoft
+  license: license (MIT)
+  min_ansible_version: 2.3
+  platforms:
+  - name: Debian
+    versions:
+      - stretch
+      - buster
+  - name: Ubuntu
+    versions:
+      - xenial
+      - bionic
+      - focal
+  galaxy_tags:
+    - fluentd
+    - td-agent
+
+dependencies: []
