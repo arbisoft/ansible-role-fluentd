@@ -1,0 +1,17 @@
+# Source Configuration
+<source>
+  @type {{ FLUENTD_DEFAULT_SOURCE_TYPE }}
+  port {{ FLUENTD_DEFAULT_LISTEN_PORT }}
+  bind {{ FLUENTD_DEFAULT_BIND_ADDRESS }}
+</source>
+
+{% if FLUENTD_EXTRA_CONFIG is defined and FLUENTD_EXTRA_CONFIG|length %}
+{{ FLUENTD_EXTRA_CONFIG }}
+{% endif %}
+
+{% if FLUENTD_CONFIG_INCLUDES is defined and FLUENTD_CONFIG_INCLUDES|length %}
+# Include Configuration
+{% for item in FLUENTD_CONFIG_INCLUDES %}
+@include {{ FLUENTD_CONFIG_INCLUDES_DIR }}/{{ item.file_name }}
+{% endfor %}
+{% endif %}

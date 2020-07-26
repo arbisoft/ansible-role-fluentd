@@ -1,2 +1,9 @@
 ---
 # defaults file for ansible-role-fluentd
+FLUENTD_APT_KEY: "https://packages.treasuredata.com/GPG-KEY-td-agent"
+FLUENTD_DEFAULT_SOURCE_TYPE: "{{ fluentd_default_source_type }}"
+FLUENTD_DEFAULT_LISTEN_PORT: "{{ fluentd_default_listen_port }}"
+FLUENTD_DEFAULT_BIND_ADDRESS: "{{ fluentd_default_bind_address }}"
+FLUENTD_EXTRA_CONFIG: ""
+FLUENTD_CONFIG_INCLUDES_DIR: "/etc/td-agent/conf.d"
+FLUENTD_CONFIG_INCLUDES: []

@@ -1,2 +1,43 @@
 ---
 # tasks file for ansible-role-fluentd
+- name: Add Treasure Data Repository Key
+  apt_key:
+    url: "{{ FLUENTD_APT_KEY }}"
+    state: present
+
+- name: Setup Treasure Data Package Repository
+  template:
+    src: "templates/etc/apt/sources.list.d/fluentd.list.j2"
+    dest: "/etc/apt/sources.list.d/fluentd.list"
+
+- name: Install Fluentd
+  apt:
+    pkg: "{{ fluentd_package_name }}"
+    update_cache: yes
+    state: present
+
+- name: Replace Fluentd Configuration
+  template:
+    src: "templates/etc/td-agent/td-agent.conf.j2"
+    dest: "{{ fluentd_configuration_file }}"
+
+- name: Create {{ FLUENTD_CONFIG_INCLUDES_DIR }} Directory
+  file:
+    path: "{{ FLUENTD_CONFIG_INCLUDES_DIR }}"
+    state: directory
+    mode: 0755
+  when: (FLUENTD_CONFIG_INCLUDES is defined) and (FLUENTD_CONFIG_INCLUDES|length > 0)
+
+- name: Ensure Presence of Fluentd Include Configuration
+  copy:
+    dest: "{{ item.destination }}"
+    content: |
+      {{ item.content }}
+  with_items: "{{ FLUENTD_CONFIG_INCLUDES }}"
+  when: (FLUENTD_CONFIG_INCLUDES is defined) and (FLUENTD_CONFIG_INCLUDES|length > 0)
+
+- name: Restart Fluentd
+  systemd:
+    name: "{{ fluentd_service_name }}"
+    enabled: yes
+    state: started

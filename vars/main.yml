@@ -1,0 +1,8 @@
+---
+# vars file for ansible-role-fluentd
+fluentd_package_name: "td-agent"
+fluentd_service_name: "{{ fluentd_package_name }}"
+fluentd_configuration_file: "/etc/td-agent/td-agent.conf"
+fluentd_default_source_type: "forward"
+fluentd_default_listen_port: "24224"
+fluentd_default_bind_address: "0.0.0.0"
