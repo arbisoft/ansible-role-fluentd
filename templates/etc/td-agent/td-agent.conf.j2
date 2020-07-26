@@ -12,6 +12,6 @@
 {% if FLUENTD_CONFIG_INCLUDES is defined and FLUENTD_CONFIG_INCLUDES|length %}
 # Include Configuration
 {% for item in FLUENTD_CONFIG_INCLUDES %}
-@include {{ FLUENTD_CONFIG_INCLUDES_DIR }}/{{ item.file_name }}
+@include {{ item.destination }}
 {% endfor %}
 {% endif %}
